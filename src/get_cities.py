@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from models import State, City, session
 
 
-class Crawler:
+class Request:
 
     def __init__(self, state):
         self.state = state
@@ -35,7 +35,7 @@ class Crawler:
             print(error)
 
 
-class DataExtractor:
+class Crawler:
     def __init__(self, state, soup):
         self.state = state
         self.cities = []
@@ -106,8 +106,8 @@ if __name__ == "__main__":
     states = ['California', 'Texas', 'Illinois', 'Pennsylvania', 'Florida',
               'Washington', ]
     for state in states:
-        crawler = Crawler(state)
-        crawler.get_page_url()
-        data = DataExtractor(crawler.state, crawler.soup)
+        source = Request(state)
+        source.get_page_url()
+        data = Crawler(source.state, source.soup)
         all_cities[data.state] = set(data.cities)
     Output(all_cities, 'db').output_choice()
