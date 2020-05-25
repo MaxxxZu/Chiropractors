@@ -16,6 +16,9 @@ class State(Base):
     state = Column(String)
     cities = relationship('City', back_populates="state")
 
+    def __repr__(self):
+        return "<State(state='%s')>" % (self.state)
+
 
 class City(Base):
     __tablename__ = 'cities'
