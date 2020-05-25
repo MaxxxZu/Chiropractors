@@ -86,9 +86,10 @@ class Output:
             json.dump(dict_for_json, file, indent=4, sort_keys=True)
 
     def to_db(self):
-        print('to Database')
         for state in self.all_cities.keys():
-            session.add(State(state=state))
+            stat = session.query(State).filter_by(state=state).first()
+            if not stat:
+                session.add(State(state=state))
         session.commit()
 
     def to_csv(self):
