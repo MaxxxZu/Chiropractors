@@ -1,0 +1,67 @@
+{
+    "California": [
+        "Alameda",
+        "Albany",
+        "Amador City",
+        "Aliso Viejo",
+        "Agoura Hills",
+        "Alhambra",
+        "Alturas",
+        "Adelanto"
+    ],
+    "Florida": [
+        "Anna Maria",
+        "County",
+        "Apopka",
+        "Archer",
+        "Arcadia",
+        "Altha",
+        "Altamonte Springs",
+        "Alford",
+        "Alachua",
+        "Apalachicola"
+    ],
+    "Illinois": [
+        "Albers",
+        "Albany",
+        "Addieville",
+        "Albion",
+        "Adeline",
+        "Addison",
+        "Aledo",
+        "Abingdon",
+        "Alexis"
+    ],
+    "Pennsylvania": [
+        "Bensalem Township",
+        "Pittsburgh",
+        "Erie",
+        "Allentown",
+        "Upper Darby Township",
+        "Bethlehem",
+        "Philadelphia",
+        "Reading",
+        "Scranton"
+    ],
+    "Texas": [
+        "Abbott",
+        "Hale",
+        "Ackerly",
+        "Adrian",
+        "Jones",
+        "Abernathy",
+        "Addison",
+        "Martin",
+        "Abilene"
+    ],
+    "Washington": [
+        "Conconully",
+        "Bucoda",
+        "Albion",
+        "Carbonado",
+        "Colton",
+        "Beaux Arts Village",
+        "Almira",
+        "Cathlamet"
+    ]
+}
