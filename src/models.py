@@ -13,7 +13,7 @@ Base = declarative_base()
 class State(Base):
     __tablename__ = 'states'
     id = Column(Integer, primary_key=True)
-    state = Column(String)
+    state_name = Column(String)
     cities = relationship('City', back_populates="state")
 
     def __repr__(self):
@@ -23,7 +23,7 @@ class State(Base):
 class City(Base):
     __tablename__ = 'cities'
     id = Column(Integer, primary_key=True)
-    city = Column(String)
+    city_name = Column(String)
     state_id = Column(Integer, ForeignKey('states.id'))
     state = relationship('State', back_populates="cities")
 
