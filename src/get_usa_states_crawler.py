@@ -3,7 +3,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from database_out import Output
+from database_out import DatabaseOutput
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -98,7 +98,7 @@ def main():
     for item_link in crawler.item_links:
         print(item_link)
         time.sleep(1)
-    Output(crawler.inner_page_info).states_capitals_out()
+    DatabaseOutput(crawler.inner_page_info).states_capitals_out()
 
 
 if __name__ == "__main__":
