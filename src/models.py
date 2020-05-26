@@ -37,6 +37,12 @@ class State(Base):
                                       state_id=self.id))
         session.commit()
 
+    def add_city(self, city_name):
+        if not City().get_city_name(city_name):
+            session.add(State_Capital(city_name=city_name,
+                                      state_id=self.id))
+        session.commit()
+
 
 class State_Capital(Base):
     __tablename__ = 'state_capital'
@@ -57,6 +63,11 @@ class City(Base):
     city_name = Column(String)
     state_id = Column(Integer, ForeignKey('states.id'))
     state = relationship('State', back_populates="cities")
+
+    def get_city_name(self, city_name):
+        city_name_query = session.query(City). \
+                          filter_by(city_name=city_name).first()
+        return city_name_query
 
 
 if __name__ == "__main__":
