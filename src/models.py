@@ -3,6 +3,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from config import config
+from sqlalchemy import and_
 
 db_path = config()
 engine = create_engine(db_path)
@@ -37,10 +38,10 @@ class State(Base):
                                       state_id=self.id))
         session.commit()
 
-    def add_city(self, city_name):
-        if not City().get_city_name(city_name):
-            session.add(State_Capital(city_name=city_name,
-                                      state_id=self.id))
+    def add_city(self, city_name, state_id):
+        if not City().get_city_name(city_name, state_id):
+            session.add(City(city_name=city_name,
+                             state_id=self.id))
         session.commit()
 
 
@@ -64,9 +65,10 @@ class City(Base):
     state_id = Column(Integer, ForeignKey('states.id'))
     state = relationship('State', back_populates="cities")
 
-    def get_city_name(self, city_name):
-        city_name_query = session.query(City). \
-                          filter_by(city_name=city_name).first()
+    def get_city_name(self, city_name, state_id):
+        city_name_query = session.query(City).filter(
+            and_(City.city_name == city_name, City.state_id == state_id)
+            ).first()
         return city_name_query
 
 
