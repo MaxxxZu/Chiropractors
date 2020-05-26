@@ -1,7 +1,7 @@
 from models import State
 
 
-class Output:
+class DatabaseOutput:
     def __init__(self, values):
         self.values = values
 
