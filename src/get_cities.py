@@ -3,8 +3,7 @@ import json
 import requests
 import xlsxwriter
 from bs4 import BeautifulSoup
-from models import State, City, session
-from sqlalchemy import and_
+from models import State
 
 
 class Request:
@@ -62,8 +61,8 @@ class Output:
             self.to_xls()
         elif self.method == 'json':
             self.to_json()
-        elif self.method == 'db':
-            self.to_db()
+        elif self.method == 'database':
+            self.to_database()
         else:
             self.to_csv()
 
@@ -86,24 +85,11 @@ class Output:
                 dict_for_json[state] = [city for city in cities]
             json.dump(dict_for_json, file, indent=4, sort_keys=True)
 
-    def to_db(self):
-        for state in self.all_cities.keys():
-            state_query = session.query(State). \
-                          filter_by(state_name=state).first()
-            if not state_query:
-                session.add(State(state_name=state))
-        session.commit()
+    def to_database(self):
         for state, cities in self.all_cities.items():
-            state_query = session.query(State).\
-                          filter_by(state_name=state).first()
+            state_query = State().get_state(state)
             for city in cities:
-                city_query = session.query(City).filter(
-                    and_(City.city_name == city,
-                         City.state_id == state_query.id)
-                    ).first()
-                if not city_query:
-                    session.add(City(city_name=city, state_id=state_query.id))
-        session.commit()
+                state_query.add_city(city, state_query.id)
 
     def to_csv(self):
         with open('cities.csv', 'w', newline='') as file:
@@ -124,4 +110,4 @@ if __name__ == "__main__":
         source.get_page_url()
         data = Crawler(source.state, source.soup)
         all_cities[data.state] = set(data.cities)
-    Output(all_cities, 'db').output_choice()
+    Output(all_cities, 'database').output_choice()
