@@ -21,6 +21,22 @@ class State(Base):
     def __repr__(self):
         return "<State(state='%s')>" % (self.state_name)
 
+    def get_state(self, state_name):
+        state_query = session.query(State). \
+                          filter_by(state_name=state_name).first()
+        return state_query
+
+    def add_state(self, state_name, state_abr):
+        if not self.get_state(state_name):
+            session.add(State(state_name=state_name, state_abr=state_abr))
+        session.commit()
+
+    def add_state_capital(self, capital_name):
+        if not State_Capital().get_state_capital(capital_name):
+            session.add(State_Capital(capital_name=capital_name,
+                                      state_id=self.id))
+        session.commit()
+
 
 class State_Capital(Base):
     __tablename__ = 'state_capital'
@@ -28,6 +44,11 @@ class State_Capital(Base):
     capital_name = Column(String)
     state_id = Column(Integer, ForeignKey('states.id'))
     state = relationship('State', back_populates="capital")
+
+    def get_state_capital(self, capital_name):
+        state_capital_query = session.query(State_Capital). \
+                          filter_by(capital_name=capital_name).first()
+        return state_capital_query
 
 
 class City(Base):
