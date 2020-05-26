@@ -14,10 +14,20 @@ class State(Base):
     __tablename__ = 'states'
     id = Column(Integer, primary_key=True)
     state_name = Column(String)
+    state_abr = Column(String)
     cities = relationship('City', back_populates="state")
+    capital = relationship('State_Capital', back_populates='state')
 
     def __repr__(self):
-        return "<State(state='%s')>" % (self.state)
+        return "<State(state='%s')>" % (self.state_name)
+
+
+class State_Capital(Base):
+    __tablename__ = 'state_capital'
+    id = Column(Integer, primary_key=True)
+    capital_name = Column(String)
+    state_id = Column(Integer, ForeignKey('states.id'))
+    state = relationship('State', back_populates="capital")
 
 
 class City(Base):
